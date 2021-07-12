@@ -11,7 +11,6 @@ class ProductSerializer(serializers.ModelSerializer):
 class ProductPositionSerializer(serializers.ModelSerializer):
     class Meta:
         model = StockProduct
-        # fields = '__all__'
         exclude = ['stock']
 
 
@@ -42,9 +41,7 @@ class StockSerializer(serializers.ModelSerializer):
             i['stock_id'] = stock.id
             i['product_id'] = i['product'].id
             del i['product']
-            print(i)
             StockProduct.objects.filter(product_id=i.get('product_id'), stock_id=i.get('stock_id')).update_or_create(
-                # **i,
                 defaults={
                     'price': i.get('price'),
                     'quantity': i.get('quantity'),
